@@ -7,7 +7,7 @@ cover = "/images/sans/cover_photo.jpg"
 keywords = ["sans", "giac", "msise", "certifications"]
 description = "I decided to take some time to write about my process for approaching courses in the MSISE Program at SANS but this is relevant for anyone taking any SANS course. I also put some links to my index template, course management tracker, and Python script to extract all the slide titles and duration to a CSV."
 showFullContent = false
-readingTime = true
+readingTime = false
 hideComments = false
 +++
 ## Introduction
