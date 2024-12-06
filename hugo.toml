@@ -25,7 +25,7 @@ paginate = 5
   # if your resource directory contains an image called `cover.(jpg|png|webp)`,
   # then the file will be used as a cover automatically.
   # With this option you don't have to put the `cover` param in a front-matter.
-  autoCover = true
+  autoCover = false
 
   # set post to show the last updated
   # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
@@ -35,23 +35,16 @@ paginate = 5
   # updatedDatePrefix = "Updated"
 
   # whether to show a page's estimated reading time
-  # readingTime = false # default
+  readingTime = true # default
 
   # whether to show a table of contents
   # can be overridden in a page's front-matter
-  # Toc = false # default
+  Toc = true # default
 
   # set title for the table of contents
   # can be overridden in a page's front-matter
   # TocTitle = "Table of Contents" # default
 
-
-[params.twitter]
-  # set Twitter handles for Twitter cards
-  # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
-  # do not include @
-  creator = ""
-  site = ""
 
 [languages]
   [languages.en]
@@ -59,9 +52,9 @@ paginate = 5
     title = "Connor Blackard's Blog"
 
     [languages.en.params]
-      subtitle = "A simple, retro theme for Hugo"
-      owner = ""
-      keywords = ""
+      subtitle = "A personal blog by Connor Blackard"
+      owner = "Connor Blackard's Blog"
+      keywords = "cybersecurity"
       copyright = ""
       menuMore = "Show more"
       readMore = "Read more"

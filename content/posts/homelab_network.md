@@ -7,7 +7,7 @@ cover = "/images/homelab/cover_page.png"
 keywords = ["homelab", "securityonion", "cybersecurity", "network security", "zeek", "suricata"]
 description = "I recently conducted an experiment exploring endpoint and network analysis on one of my homelab devices. I got to use ClamAV, Zeek, Suricata, and Security Onion to try and prove a device isn’t compromised."
 showFullContent = false
-readingTime = false
+readingTime = true
 hideComments = false
 +++
 ## Introduction
