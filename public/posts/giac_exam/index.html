@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>How to Pass a SANS Course in 90 days. :: Connor Blackard&#39;s Blog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="I decided to take some time to write about my process for approaching courses in the MSISE Program at SANS but this is relevant for anyone taking any SANS course. I also put some links to my index template, course management tracker, and Python script to extract all the slide titles and duration to a CSV." />
+<meta name="keywords" content="sans, giac, msise, certifications" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="//localhost:1313/posts/giac_exam/" />
+
+
+
+
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/buttons.min.2bc533403a27dfe0e93105a92502b42ce4587e2e4a87d9f7d349e51e16e09478.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/code.min.00125962708925857e7b66dbc58391d55be1191a3d0ce2034de8c9cd2c481c36.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/fonts.min.4881f0c525f3ce2a1864fb6e96676396cebe1e6fcef1933e8e1dde7041004fb5.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/footer.min.2e3eb191baee58dd05a9f0104ac1fab0827bca7c64dafe0b2579f934c33a1d69.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/gist.min.a751e8b0abe1ba8bc53ced52a38b19d8950fe78ca29454ea8c2595cf26aad5c0.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/header.min.b6fb4423cf82a9f9d7abc9cd010223fa3d70a6526a3f28f8e17d814c06e18f9e.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.min.fe8dc560fccb53a458b0db19ccb7b265764ac46b68596b7e099c6793054dd457.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/menu.min.83637a90d903026bc280d3f82f96ceb06c5fc72b7c1a8d686afb5bbf818a29f7.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/pagination.min.82f6400eae7c7c6dc3c866733c2ec0579e4089608fea69400ff85b3880aa0d3c.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/post.min.fc74ca360273c1d828da3c02b8174eba435607b369d98418ccc6f2243cd4e75d.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/prism.min.9023bbc24533d09e97a51a0a42a5a7bfe4c591ae167c5551fb1d2191d11977c0.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/syntax.min.cc789ed9377260d7949ea4c18781fc58959a89287210fe4edbff44ebfc1511b6.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/terminal.min.929924583a103bbdf2f963efbd2691a3bb35708341184cc05b164cf1fdbb28da.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/terms.min.b81791663c3790e738e571cdbf802312390d30e4b1d8dc9d814a5b5454d0ac11.css">
+
+
+
+
+
+
+
+<link rel="shortcut icon" href="//localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="Connor Blackard" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How to Pass a SANS Course in 90 days.">
+<meta property="og:description" content="I decided to take some time to write about my process for approaching courses in the MSISE Program at SANS but this is relevant for anyone taking any SANS course. I also put some links to my index template, course management tracker, and Python script to extract all the slide titles and duration to a CSV." />
+<meta property="og:url" content="//localhost:1313/posts/giac_exam/" />
+<meta property="og:site_name" content="Connor Blackard&#39;s Blog" />
+
+  
+  
+  <meta property="og:image" content="//localhost:1313/images/sans/cover_photo.jpg">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2024-03-26 09:08:41 -0600 -0600" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+<div class="container">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Connor Blackard&#39;s Blog
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="//localhost:1313/posts/giac_exam/">How to Pass a SANS Course in 90 days.</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2024-03-26</time><span class="post-author">Connor Blackard</span></div>
+
+  
+  
+  <img src="//localhost:1313/images/sans/cover_photo.jpg"
+    class="post-cover"
+    alt="How to Pass a SANS Course in 90 days."
+    title="Cover Image" />
+
+
+  
+
+  <div class="post-content"><div>
+        <h2 id="introduction">Introduction<a href="#introduction" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>I often see individuals in the <a href="sans.edu">SANS.edu</a> Slack forum wonder where to begin for their first few SANS courses or how to tackle the indexing and studying process for the GIAC exams. I am currently in my seventh class in the MSISE program and thought I&rsquo;d take some time to write about what works for me and how I approach each course. While I know there are a lot of resources out there on how to prepare an index (huge shoutout to <a href="https://www.linkedin.com/in/lcarhart/">Lesley Carhart</a> for the widely beloved <a href="https://tisiphone.net/2015/08/18/giac-testing/">&ldquo;Pancakes Method&rdquo;</a>) there aren&rsquo;t a lot of good resources for how to manage time across several months to soak up thousands of pages of information.</p>
+<p>SANS is known for some of the top technical training in the cyber security industry but with that also comes a steep price tag. As individuals are paying for these courses out of pocket, with student loans, or even having their companies foot the bill, it only makes sense to put in the effort and truly get your money&rsquo;s worth.</p>
+<p>This article is going to cover my steps from the minute I book a course all the way through when I put the badge on my LinkedIn profile. I&rsquo;ll be covering:</p>
+<ol>
+<li>Mindset</li>
+<li>Allocating Time</li>
+<li>Preparing a Course Tracker</li>
+<li>Taking the Course/Preparing an Index</li>
+<li>Practice Exams</li>
+<li>Passing the Exam</li>
+</ol>
+<h2 id="mindset">Mindset<a href="#mindset" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>Getting into the proper mindset is one of the most important things you can do before you take a course. Given this course will be a portion of your time for the next several weeks, you want to ensure you are ready for what lies ahead. One of the first things I do before a new course is look up the course description on the SANS.org website. Each course has a page and there is a brief description and overview. You should review this before choosing a course and after purchasing a course so you know what you will be covered as well as what won&rsquo;t be covered. Interesting things I look for in the course description include skills, tools, topics, and technology requirements.</p>
+<p>In addition to reviewing the course description, you may also have a corresponding GIAC exam with your course. I found it helpful to search the exam name on LinkedIn or Twitter to see what people who have recently taken it thought about it.</p>
+<p>Lastly, it may be helpful to define what you are hoping to get out of the course and any success criteria you have. My success criteria always revolve around additional knowledge and understanding in the field. To me, the most important part of the entire experience is the course itself and the least important is the certification. While these certifications are highly sought after by recruiters and hiring managers, there is a tendency to equate knowledge to certifications held and it cannot be further from the truth. That said, it&rsquo;s a fact of life that these are on job postings and it&rsquo;s a necessary evil to prove you are proficient in the material.</p>
+<h2 id="allocating-time">Allocating Time<a href="#allocating-time" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>After getting in the proper mindset for the course, my next step is to allocate time to do the course. I begin by figuring out how long I have to take the course and when I have to be finished. Since I am doing this as part of a Master&rsquo;s program, I treat this like M-F schedule. I know that every day I can dedicate one hour to school before I begin work. This usually takes place for me between 7-8 am each day. But I know that there will be days that I am not able to do school work such as days I am traveling, on PTO, or on holidays. With this information, I enter all available dates into a spreadsheet and figure out what days are school days and what days aren&rsquo;t. From here I can get a total on how many days I will have for the course.</p>
+
+  <figure class="left" >
+    <img src="/images/sans/course_tracker.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Example Course Schedule</figcaption>
+    
+  </figure>
+
+
+<p>After I have identified how many days I will have, I can set goals for each day and track milestones. It&rsquo;s important to point out that while I spend one hour on school each day, the hours remaining only go down by a half hour every day. This is because each day is a combination of watching OnDemand videos, building my index, and reading/highlighting the books. More on that in a few sections.</p>
+<p>After figuring out how many days are available, the next step is to determine what slides to cover each day. I wrote a <a href="https://github.com/connorblackard/SANS-Slide-Titles-to-CSV">Python script</a> this past year that will take the JSON output from the SANS OnDemand Player and convert it into a CSV file that you can put into your course tracker on the &ldquo;Slides with Lab Time&rdquo; sheet. This will list each slide along with the book, section, slide number, video title, and duration. This allows you to get granular in your study plan and say &ldquo;It&rsquo;s day 15, I need to do these 15 slides today&rdquo;.</p>
+<p>A key advantage of this is that you can see how much time you spent on this course throughout the period. It is easy to multiply your course days by one hour each day and figure out how much time you put into continuing education. I ensure this is tracked at work, reported to my manager, and brought up in professional development chats/evaluations.</p>
+<h2 id="preparing-a-course-tracker">Preparing a Course Tracker<a href="#preparing-a-course-tracker" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>As you have seen in the above screenshot, I use Google Sheets/Excel heavily to track my progress and stay organized while taking courses. I have altered and prepared an example of my index template and course tracker and made it available <a href="https://docs.google.com/spreadsheets/d/1u4qPWuFuW33xGp9qY98jfR_mCvQ3_vPLCMP0mmYedcg/view?usp=drive_link">here</a>. You can use this in either Google Sheets or Excel. I have sheets titled:</p>
+<ul>
+<li>Index - Entries of key concepts</li>
+<li>Index Supplements - Additional items that I need to put into my final index (mostly screenshots and cheat sheets)</li>
+<li>Labs - A list of labs, page numbers, and key tools/commands used</li>
+<li>Course Progress - A color-coded breakdown of each book and chapter</li>
+<li>Slides with Lab Time - Discussed above</li>
+<li>Schedule - Discussed above</li>
+</ul>
+<p>Ultimately, this is just my method and please do tailor this for what works best for you.</p>
+<h2 id="taking-the-coursepreparing-an-index">Taking the Course/Preparing an Index<a href="#taking-the-coursepreparing-an-index" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>Now we have arrived at the actual course portion. Usually, everything above takes me one to two hours. I try and knock these tasks out while the books are shipping so I am not wasting time that can be spent elsewhere. While the preparation to get to this point may seem excessive, it truly will pay off when you finish the course on time and ace the exam.</p>
+<p>A few days after you have placed your course order, a large box of books will come to your doorstep. These books will be the most valuable resource you will have during the entire course. Everything you will be tested on is within the covers of these books. Your goal with an index is to be able to quickly sift through the books to find information. In my opinion, an index should not contain any information (other than cheat sheets). It should only contain the location of where to find information.</p>
+<p>Other key items that are a must-have for every course are <a href="https://a.co/d/1WbEqo2">highlighters</a> and <a href="https://a.co/d/cS6vJl8">Post-it tabs</a>. You can get by without these but at the point, you are taking a $4-8k course, it&rsquo;s worth it to spend a few more bucks and do things right.</p>
+<p>For each book, I put a sticky tab at the top to assign the book a color, and sticky tabs on the side to assign each chapter a color. During the exam I look at my index and think &ldquo;I need to find the red book, blue chapter, page 52&rdquo; and this speeds things up quite a bit.</p>
+
+  <figure class="left" >
+    <img src="/images/sans/book_with_tabs.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Book with Tabs</figcaption>
+    
+  </figure>
+
+
+<p>My routine is to watch the video (usually at 1.2x or 1.5x speed), read/highlight the corresponding page in the book, make an index entry, and repeat. This ensures that I consume all the knowledge for the topic at one time and let it sink in. I only highlight things that I think may come up on the exam or that will be useful for me later. While there is a lot of good information in the textbook, sometimes there is some fluff that after reading it once, I won&rsquo;t ever need to come back to.</p>
+<p>Good index entries are the key to efficiency in finding content. Some examples of good entries are:</p>
+<ul>
+<li>Routers, Threats</li>
+<li>Routers, Protocols</li>
+<li>Routers, BGP</li>
+<li>VLAN, Private</li>
+<li>Private VLAN</li>
+<li>PowerShell: Get-ChildItem</li>
+<li>PowerShell: Write-Host</li>
+<li>Tool: netcat</li>
+<li>Person: Steve Jobs</li>
+</ul>
+<p>I list many different ways as I may think about it during the exam. I also start broad and then narrow down with each comma. It is okay if you have multiple entries per page. I put them in a second column, separated with semicolons, and gave them their column later. Try and group items whenever possible such as commands, tools, or people. It&rsquo;s a lot easier to find one name in a list of twenty other names instead of one name somewhere in ten pages.</p>
+
+  <figure class="left" >
+    <img src="/images/sans/index_example.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Index Example</figcaption>
+    
+  </figure>
+
+
+<p>As I complete the labs I have a sheet that contains the name, page numbers, and key tools/commands used. Once again, if I need information, I want to be using the book, not my index so it just has to have enough to jog my memory and get me to the right place.</p>
+<p>Once you have completed the course and all labs, it&rsquo;s time to prune down your index into something you can fit into a two-column word document. I included examples of the pruning process and comments on each sheet. I think the Pancakes Method does a better job explaining that than me so I will point you there. As long as you get down to a color-coded book/page number and term, you should be good. Here is a <a href="https://docs.google.com/document/d/1KmIHKMMAC8EK9LEBaaCQNz6Kk5EF4uPH/view?usp=sharing&ouid=110892441845319043427&rtpof=true&sd=true">link</a> to my template.</p>
+
+  <figure class="left" >
+    <img src="/images/sans/example_term_list.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Example Index Term List</figcaption>
+    
+  </figure>
+
+
+<p>I put all my index materials into a Word document to format and turn into a PDF. I have this bound and printed at my local FedEx Kinkos. The cost comes out to be $15-30 depending on the number of pages. I usually go with spiral bound and have them put a nice clear cover on it.</p>
+<p>One last note on sharing indexes. I choose not to share my indexes and instead share the method. My index is built around how my brain works and how I will remember things during the test. I don&rsquo;t want to be blamed when someone fails a test because their brain works differently than mine. Also, I put screenshots of the textbooks in the back of my indexes so sharing that would be against SANS rules. My goal is to teach people to fish, not give them fish.</p>
+<h2 id="practice-exams">Practice Exams<a href="#practice-exams" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>Practice exams are one of the best resources to assess if you are ready for the real exam. I suggest you always take one before you take the real exam. For SANS.edu students, you usually get two practice exams with each course. I have never needed more than one per exam and I largely attribute that to my upfront legwork with the course material and index creation. Every so often I see something online where people say they take one practice exam before the course to see where they are and take the second one after the course. I cannot stress this enough, that is one of the worst uses of a practice test I have ever heard of. Please don&rsquo;t do this. Just make your index, get it ready, and then use that to take the practice test. When you see questions you will be in one of a few situations, here is what you should do for each:</p>
+<p>You know the right answer with 100% certainty - Submit the answer.
+You think you know the right answer with 50% certainty - Take a minute, consult your index, and see if you can increase your certainty. If it takes too long, skip it and come back to it at the end.
+You have no idea and it&rsquo;ll be time-consuming to find the answer - Skip and come back to it at the end. Sometimes you&rsquo;ll stumble across the information when researching other questions.</p>
+<p>You have quite a bit of time for the exam and if you don&rsquo;t spend a lot of time on questions in scenario 1, you can dedicate more time to labs and scenario 2 and 3 questions. Quick back-of-the-hand math is 240 minutes for 100 questions. That&rsquo;s 2 minutes and 24 seconds per question. If you knock out a bunch of easy questions and quick wins, you can even bump the time up to 4-5 minutes each for the hard questions.</p>
+<p>Treat your practice exam like your real exam. Only use your books and index. This way you will know if you are truly ready to test. All the information needed to get 100% is in the books. If you miss questions, read the explanations and review your index. Try and figure out if you just weren&rsquo;t familiar with a term or if something was missing from your index.</p>
+<p>The rule of thumb is that you are ready to test if you get over 80% on the practice exam. Because of this rule of thumb, I&rsquo;ve never taken a second practice exam. I usually give mine away on the GIAC mailing lists or Slack to someone also taking the course.</p>
+<h2 id="passing-the-exam">Passing the Exam<a href="#passing-the-exam" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>The night before exam day comes, I prepare my office. For me, this includes unplugging my TV and Alexa, clearing off my desk, removing extra monitors, and laying out my two forms of ID. I prefer online testing due to the convenience factor but not everyone does. I have only had one issue come up and it was acceptably resolved within 30 minutes (didn&rsquo;t lose any exam time). If you took your practice exam like a real exam, this should be just the same. You are given one break if needed. I don&rsquo;t take it but I usually wrap exams up in around two hours. If I went longer than that, I would probably be using the breaks. After finishing the exam you are immediately notified of your score and shown how you did in each section. After you pass, the last thing to do it go to <a href="http://credly.com/">credly.com</a> and add the badge to your LinkedIn profile and resume.</p>
+
+  <figure class="left" >
+    <img src="/images/sans/resume.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Resume with GIAC Certifications</figcaption>
+    
+  </figure>
+
+
+
+  <figure class="left" >
+    <img src="/images/sans/linkedin.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >LinkedIn Profile with Badges</figcaption>
+    
+  </figure>
+
+
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>In conclusion, I think that SANS courses are some of the best available training for cyber security. They are pricey but worth it in my opinion. I am fortunate to have an employer who promotes training and continual education and hope others do too. While this was a glimpse at my process, it is by no means a requirement or best practice. It is just what works for me. Hopefully, this can be of value to others and inspire you to figure out your way or adapt this way to work for you.</p>
+
+      </div></div>
+
+  
+    
+<div class="pagination">
+  <div class="pagination__title">
+    <span class="pagination__title-h">Read other posts</span>
+    <hr />
+  </div>
+  <div class="pagination__buttons">
+    
+      <a href="//localhost:1313/posts/homelab_network/" class="button inline prev">
+        Is My Homelab Compromised?
+      </a>
+    
+    
+    
+  </div>
+</div>
+
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2024 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

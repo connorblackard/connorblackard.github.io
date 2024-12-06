@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Connor Blackard&#39;s Blog</title>
+    <link>//localhost:1313/</link>
+    <description>Recent content on Connor Blackard&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 11 Apr 2024 10:22:35 -0600</lastBuildDate><atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Is My Homelab Compromised?</title>
+      <link>//localhost:1313/posts/homelab_network/</link>
+      <pubDate>Thu, 11 Apr 2024 10:22:35 -0600</pubDate>
+      
+      <guid>//localhost:1313/posts/homelab_network/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;A few months ago in a conversation with someone about homelabs, I mentioned that I have a small homelab that includes a Lenovo Mini PC that runs Proxmox. By most accounts, this is a very modest homelab that allows me to spin up test machines as needed for whatever I am studying at the time and a Pi-Hole DNS AdBlocker. I guess the individual felt compelled to tell me that Lenovo had been known for backdoors and rootkits and I should save myself now and get rid of the entire system. Luckily as the CIO and CISO of my home network, I was able to dismiss them and say I consider the vendor and device to be a low risk to me, in my environment, with my usage. However, the thought crossed my head, what if this was a business leader who read a headline and came to inquire about potential risk? If that was the case, I may have to produce a more detailed answer than &amp;ldquo;It&amp;rsquo;s fine&amp;rdquo; or &amp;ldquo;Trust me bro&amp;rdquo;. With some extra time, I decided I wanted to investigate this and see what I could come up with.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;A few months ago in a conversation with someone about homelabs, I mentioned that I have a small homelab that includes a Lenovo Mini PC that runs Proxmox. By most accounts, this is a very modest homelab that allows me to spin up test machines as needed for whatever I am studying at the time and a Pi-Hole DNS AdBlocker. I guess the individual felt compelled to tell me that Lenovo had been known for backdoors and rootkits and I should save myself now and get rid of the entire system. Luckily as the CIO and CISO of my home network, I was able to dismiss them and say I consider the vendor and device to be a low risk to me, in my environment, with my usage. However, the thought crossed my head, what if this was a business leader who read a headline and came to inquire about potential risk? If that was the case, I may have to produce a more detailed answer than &amp;ldquo;It&amp;rsquo;s fine&amp;rdquo; or &amp;ldquo;Trust me bro&amp;rdquo;. With some extra time, I decided I wanted to investigate this and see what I could come up with.&lt;/p&gt;
+&lt;h2 id=&#34;threats&#34;&gt;Threats&lt;/h2&gt;
+&lt;p&gt;The first thing I did was consider possible attack vectors. I identified there are two main categories of threats that could happen, physical or digital. The main physical threats to the device are theft and environmental threats (tornados, busted pipes, inquisitive children). The controls for the threat of theft are locking doors, 24x7 security cameras, and two vicious attack dogs.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/attackdogs.jpg&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Vicious Attack Dogs&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;For the environmental risks, the natural disaster risks have been transferred to the insurance company and the children risk will have to be accepted.&lt;/p&gt;
+&lt;p&gt;With the physical threats out of the way, we can move to the digital threats. In my mind, any digital threat would have to have some visibility on either the endpoint or the network. Malware would either be communicating to a C2 server or a backdoor would be present that would allow an attacker to trigger hidden functionality from the outside (similar the the recent XZ Utils backdoor). I am not as concerned about an attacker triggering a backdoor because the device is not internet-facing. In that scenario, an attacker would have to already have internal network access to even make use of such a backdoor. My testing plan was to scan the endpoint with antivirus and monitor network traffic for a few days and review.&lt;/p&gt;
+&lt;h2 id=&#34;testing&#34;&gt;Testing&lt;/h2&gt;
+&lt;p&gt;To start with the endpoint, I used ClamAV to scan the system. This is a free and open-source antivirus scanner that supports Windows, Linux, and macOS. Since Proxmox is Debian under the hood, I was easily able to install and run the tool.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/install_clam.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Installing ClamAV&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;From here I ran the tool against every file on the disk. This was a lengthy scan but it ran in the background and I came back to it about 30 minutes later.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/running_clam.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Running ClamAV&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/clam_summary.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;ClamAV Scan Summary&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;As expected, the scan came back with no findings.&lt;/p&gt;
+&lt;p&gt;From here I moved into the network analysis which I figured would be the more intensive process. I have a Ubiquiti Router at home and lucky for me, it has a large solid-state drive and comes installed with tcpdump. I decided to run tcpdump for 48 hours to collect network traffic to and from Proxmox. I will note here that I only collected traffic to and from the hypervisor itself, I did not collect all traffic on the port that would include the VMs. This was a decision to keep the packet capture size reasonable in addition to only testing if the Lenovo device was beaconing out, not the random VMs.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/tcpdump_command.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;tcpdump Command&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;Two days later I came back to a 232 MB packet capture of 11,796 packets. From here I had two routes I could go down to analyze this capture. The first would be the use of Wireshark to view the capture and rely on display filters and the statistics menu options (such as Protocol Hierarchy and Conversations) to quickly highlight items of interest. The second would be to use a tool such as Zeek to process the data into nicely formatted logs. While I did look at the capture as described in Wireshark, I created a Security Onion VM (on Proxmox) to process the PCAP. The added benefit of this is that it also ran Suricata on it. This is more in line with how an enterprise would handle a large amount of data with a Network Security Monitoring (NSM) platform.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/pcap_upload.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Security Onion PCAP Upload&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;I decided to manually review the logs instead of using the Security Onion Console and Kibana. I did this because I knew I could confidently analyze this using the command line. If I had to search or do any additional research, I could pivot into Kibana for additional capabilities. A first look at the Zeek logs revealed quite a few items.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/zeek_logs.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Zeek Logs&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;I went through all of these but the ones that I&amp;rsquo;ll cover here are conn.log, dns.log, http.log, files.log, and ssl.log. While the others are valuable logs, they didn&amp;rsquo;t have anything super interesting in this case.&lt;/p&gt;
+&lt;p&gt;Also worth noting is that I had to use jq instead of zeek-cut in the below commands. This was because Security Onion outputs zeek in JSON format instead of TSV format. I found this annoying as I prefer zeek-cut but between Google and a &lt;a href=&#34;https://gist.github.com/olih/f7437fb6962fb3ee9fe95bda8d2c8fa4&#34;&gt;cheatsheet&lt;/a&gt;, I survived.&lt;/p&gt;
+&lt;p&gt;The first log I looked at was the dns.log. This found all the DNS requests made from Proxmox. I did expect to see some activity here primarily because I ran some updates during the middle of the packet capture (to make sure it wasn&amp;rsquo;t going to be too boring).&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/dns_logs.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;dns.log Output&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;It looks like all of the DNS queries were related to updates of some sort. Most of the updates are related to Debian and Proxmox. I did have to research what turnkeylinux.org was but then I remembered that Proxmox offered LXC containers, some of which are from turnkey. I had used this feature in the past so I am guessing it was an update to either the container lists or a container that is on the system, either way not a threat. The last item I had to research was the osuosl.org domain. Seeing this, I thought an ftp URL was weird but it turned out to be a university hosting an open-source mirror.&lt;/p&gt;
+&lt;p&gt;Next, I looked into files.log. This would let me see what Zeek detected as being downloaded. Based on the URLs above, I expected a lot to be related to updates.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/files_logs.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;files.log Output&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;As I expected, a majority of the files were update package related. The rest of the file types were also not found to be threats.&lt;/p&gt;
+&lt;p&gt;Next, I reviewed the http.log file to see what URLs were being hit. I have a good idea of the domains but since package managers often use port 80, I would be able to see additional details including the full URLs being requested.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/http_logs.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;http.log Output&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;This paints a good picture of the network traffic and appears to line up with the above findings.&lt;/p&gt;
+&lt;p&gt;Next, I reviewed the conn.log file. Here I was looking for what ports and services were being used.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/conn_log.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;conn.log Services Output&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/conn_log_port.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;conn.log Ports Output&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;I found it unusual that there were entries for ports 12 and 1168 in the logs. These entries corresponded with the &amp;rsquo;null&amp;rsquo; service entries. I went to both Wireshark and tcpdump to try and find those packets but could not. Ultimately, I trust tcpdump as the official source of truth and if that could not find the packets, I am not convinced they exist. I chalked this up to a Zeek error but will probably try and investigate further by rerunning Zeek, this time in a docker container (with my preferred TSV format). For right now I don&amp;rsquo;t consider this to be a threat. Other interesting things in the ports list were NTP(123/UDP) and the Proxmox WebUI (8006/TCP). I did note that there were 71 SSL packets but only 69 Proxmox WebUI packets. This meant that two packets used SSL that went outbound. These corresponded to turnkey Linux based on the SNI name.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/homelab/ssl_log.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;ssl.log Output&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;The last thing I did was examine the Suricata file to see if any alerts were triggered. The file was empty indicating no signatures matched. Following this, I felt I had a good understanding of the network traffic sent to and from the system over the testing period.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Ultimately, I feel like now I have a tested process and documentable data to say that this device does not appear to be compromised. This backs up my initial stance of it being a low risk while also having more substance than &amp;lsquo;Trust me bro&amp;rsquo;. I am sure that there are additional tests I could have run and ways that stuff could still but undetected but this is good enough for me and I feel good enough to present as a response that due diligence has been done. Overall it was a fun experiment that took a couple of hours and let me dive into some technologies in ways I don&amp;rsquo;t normally get to. I&amp;rsquo;d love to hear from others if you had something you would have done differently or how you would have approached the problem.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>How to Pass a SANS Course in 90 days.</title>
+      <link>//localhost:1313/posts/giac_exam/</link>
+      <pubDate>Tue, 26 Mar 2024 09:08:41 -0600</pubDate>
+      
+      <guid>//localhost:1313/posts/giac_exam/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I often see individuals in the &lt;a href=&#34;sans.edu&#34;&gt;SANS.edu&lt;/a&gt; Slack forum wonder where to begin for their first few SANS courses or how to tackle the indexing and studying process for the GIAC exams. I am currently in my seventh class in the MSISE program and thought I&amp;rsquo;d take some time to write about what works for me and how I approach each course. While I know there are a lot of resources out there on how to prepare an index (huge shoutout to &lt;a href=&#34;https://www.linkedin.com/in/lcarhart/&#34;&gt;Lesley Carhart&lt;/a&gt; for the widely beloved &lt;a href=&#34;https://tisiphone.net/2015/08/18/giac-testing/&#34;&gt;&amp;ldquo;Pancakes Method&amp;rdquo;&lt;/a&gt;) there aren&amp;rsquo;t a lot of good resources for how to manage time across several months to soak up thousands of pages of information.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I often see individuals in the &lt;a href=&#34;sans.edu&#34;&gt;SANS.edu&lt;/a&gt; Slack forum wonder where to begin for their first few SANS courses or how to tackle the indexing and studying process for the GIAC exams. I am currently in my seventh class in the MSISE program and thought I&amp;rsquo;d take some time to write about what works for me and how I approach each course. While I know there are a lot of resources out there on how to prepare an index (huge shoutout to &lt;a href=&#34;https://www.linkedin.com/in/lcarhart/&#34;&gt;Lesley Carhart&lt;/a&gt; for the widely beloved &lt;a href=&#34;https://tisiphone.net/2015/08/18/giac-testing/&#34;&gt;&amp;ldquo;Pancakes Method&amp;rdquo;&lt;/a&gt;) there aren&amp;rsquo;t a lot of good resources for how to manage time across several months to soak up thousands of pages of information.&lt;/p&gt;
+&lt;p&gt;SANS is known for some of the top technical training in the cyber security industry but with that also comes a steep price tag. As individuals are paying for these courses out of pocket, with student loans, or even having their companies foot the bill, it only makes sense to put in the effort and truly get your money&amp;rsquo;s worth.&lt;/p&gt;
+&lt;p&gt;This article is going to cover my steps from the minute I book a course all the way through when I put the badge on my LinkedIn profile. I&amp;rsquo;ll be covering:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Mindset&lt;/li&gt;
+&lt;li&gt;Allocating Time&lt;/li&gt;
+&lt;li&gt;Preparing a Course Tracker&lt;/li&gt;
+&lt;li&gt;Taking the Course/Preparing an Index&lt;/li&gt;
+&lt;li&gt;Practice Exams&lt;/li&gt;
+&lt;li&gt;Passing the Exam&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;mindset&#34;&gt;Mindset&lt;/h2&gt;
+&lt;p&gt;Getting into the proper mindset is one of the most important things you can do before you take a course. Given this course will be a portion of your time for the next several weeks, you want to ensure you are ready for what lies ahead. One of the first things I do before a new course is look up the course description on the SANS.org website. Each course has a page and there is a brief description and overview. You should review this before choosing a course and after purchasing a course so you know what you will be covered as well as what won&amp;rsquo;t be covered. Interesting things I look for in the course description include skills, tools, topics, and technology requirements.&lt;/p&gt;
+&lt;p&gt;In addition to reviewing the course description, you may also have a corresponding GIAC exam with your course. I found it helpful to search the exam name on LinkedIn or Twitter to see what people who have recently taken it thought about it.&lt;/p&gt;
+&lt;p&gt;Lastly, it may be helpful to define what you are hoping to get out of the course and any success criteria you have. My success criteria always revolve around additional knowledge and understanding in the field. To me, the most important part of the entire experience is the course itself and the least important is the certification. While these certifications are highly sought after by recruiters and hiring managers, there is a tendency to equate knowledge to certifications held and it cannot be further from the truth. That said, it&amp;rsquo;s a fact of life that these are on job postings and it&amp;rsquo;s a necessary evil to prove you are proficient in the material.&lt;/p&gt;
+&lt;h2 id=&#34;allocating-time&#34;&gt;Allocating Time&lt;/h2&gt;
+&lt;p&gt;After getting in the proper mindset for the course, my next step is to allocate time to do the course. I begin by figuring out how long I have to take the course and when I have to be finished. Since I am doing this as part of a Master&amp;rsquo;s program, I treat this like M-F schedule. I know that every day I can dedicate one hour to school before I begin work. This usually takes place for me between 7-8 am each day. But I know that there will be days that I am not able to do school work such as days I am traveling, on PTO, or on holidays. With this information, I enter all available dates into a spreadsheet and figure out what days are school days and what days aren&amp;rsquo;t. From here I can get a total on how many days I will have for the course.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/sans/course_tracker.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Example Course Schedule&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;After I have identified how many days I will have, I can set goals for each day and track milestones. It&amp;rsquo;s important to point out that while I spend one hour on school each day, the hours remaining only go down by a half hour every day. This is because each day is a combination of watching OnDemand videos, building my index, and reading/highlighting the books. More on that in a few sections.&lt;/p&gt;
+&lt;p&gt;After figuring out how many days are available, the next step is to determine what slides to cover each day. I wrote a &lt;a href=&#34;https://github.com/connorblackard/SANS-Slide-Titles-to-CSV&#34;&gt;Python script&lt;/a&gt; this past year that will take the JSON output from the SANS OnDemand Player and convert it into a CSV file that you can put into your course tracker on the &amp;ldquo;Slides with Lab Time&amp;rdquo; sheet. This will list each slide along with the book, section, slide number, video title, and duration. This allows you to get granular in your study plan and say &amp;ldquo;It&amp;rsquo;s day 15, I need to do these 15 slides today&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;A key advantage of this is that you can see how much time you spent on this course throughout the period. It is easy to multiply your course days by one hour each day and figure out how much time you put into continuing education. I ensure this is tracked at work, reported to my manager, and brought up in professional development chats/evaluations.&lt;/p&gt;
+&lt;h2 id=&#34;preparing-a-course-tracker&#34;&gt;Preparing a Course Tracker&lt;/h2&gt;
+&lt;p&gt;As you have seen in the above screenshot, I use Google Sheets/Excel heavily to track my progress and stay organized while taking courses. I have altered and prepared an example of my index template and course tracker and made it available &lt;a href=&#34;https://docs.google.com/spreadsheets/d/1u4qPWuFuW33xGp9qY98jfR_mCvQ3_vPLCMP0mmYedcg/view?usp=drive_link&#34;&gt;here&lt;/a&gt;. You can use this in either Google Sheets or Excel. I have sheets titled:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Index - Entries of key concepts&lt;/li&gt;
+&lt;li&gt;Index Supplements - Additional items that I need to put into my final index (mostly screenshots and cheat sheets)&lt;/li&gt;
+&lt;li&gt;Labs - A list of labs, page numbers, and key tools/commands used&lt;/li&gt;
+&lt;li&gt;Course Progress - A color-coded breakdown of each book and chapter&lt;/li&gt;
+&lt;li&gt;Slides with Lab Time - Discussed above&lt;/li&gt;
+&lt;li&gt;Schedule - Discussed above&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ultimately, this is just my method and please do tailor this for what works best for you.&lt;/p&gt;
+&lt;h2 id=&#34;taking-the-coursepreparing-an-index&#34;&gt;Taking the Course/Preparing an Index&lt;/h2&gt;
+&lt;p&gt;Now we have arrived at the actual course portion. Usually, everything above takes me one to two hours. I try and knock these tasks out while the books are shipping so I am not wasting time that can be spent elsewhere. While the preparation to get to this point may seem excessive, it truly will pay off when you finish the course on time and ace the exam.&lt;/p&gt;
+&lt;p&gt;A few days after you have placed your course order, a large box of books will come to your doorstep. These books will be the most valuable resource you will have during the entire course. Everything you will be tested on is within the covers of these books. Your goal with an index is to be able to quickly sift through the books to find information. In my opinion, an index should not contain any information (other than cheat sheets). It should only contain the location of where to find information.&lt;/p&gt;
+&lt;p&gt;Other key items that are a must-have for every course are &lt;a href=&#34;https://a.co/d/1WbEqo2&#34;&gt;highlighters&lt;/a&gt; and &lt;a href=&#34;https://a.co/d/cS6vJl8&#34;&gt;Post-it tabs&lt;/a&gt;. You can get by without these but at the point, you are taking a $4-8k course, it&amp;rsquo;s worth it to spend a few more bucks and do things right.&lt;/p&gt;
+&lt;p&gt;For each book, I put a sticky tab at the top to assign the book a color, and sticky tabs on the side to assign each chapter a color. During the exam I look at my index and think &amp;ldquo;I need to find the red book, blue chapter, page 52&amp;rdquo; and this speeds things up quite a bit.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/sans/book_with_tabs.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Book with Tabs&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;My routine is to watch the video (usually at 1.2x or 1.5x speed), read/highlight the corresponding page in the book, make an index entry, and repeat. This ensures that I consume all the knowledge for the topic at one time and let it sink in. I only highlight things that I think may come up on the exam or that will be useful for me later. While there is a lot of good information in the textbook, sometimes there is some fluff that after reading it once, I won&amp;rsquo;t ever need to come back to.&lt;/p&gt;
+&lt;p&gt;Good index entries are the key to efficiency in finding content. Some examples of good entries are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Routers, Threats&lt;/li&gt;
+&lt;li&gt;Routers, Protocols&lt;/li&gt;
+&lt;li&gt;Routers, BGP&lt;/li&gt;
+&lt;li&gt;VLAN, Private&lt;/li&gt;
+&lt;li&gt;Private VLAN&lt;/li&gt;
+&lt;li&gt;PowerShell: Get-ChildItem&lt;/li&gt;
+&lt;li&gt;PowerShell: Write-Host&lt;/li&gt;
+&lt;li&gt;Tool: netcat&lt;/li&gt;
+&lt;li&gt;Person: Steve Jobs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I list many different ways as I may think about it during the exam. I also start broad and then narrow down with each comma. It is okay if you have multiple entries per page. I put them in a second column, separated with semicolons, and gave them their column later. Try and group items whenever possible such as commands, tools, or people. It&amp;rsquo;s a lot easier to find one name in a list of twenty other names instead of one name somewhere in ten pages.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/sans/index_example.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Index Example&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;As I complete the labs I have a sheet that contains the name, page numbers, and key tools/commands used. Once again, if I need information, I want to be using the book, not my index so it just has to have enough to jog my memory and get me to the right place.&lt;/p&gt;
+&lt;p&gt;Once you have completed the course and all labs, it&amp;rsquo;s time to prune down your index into something you can fit into a two-column word document. I included examples of the pruning process and comments on each sheet. I think the Pancakes Method does a better job explaining that than me so I will point you there. As long as you get down to a color-coded book/page number and term, you should be good. Here is a &lt;a href=&#34;https://docs.google.com/document/d/1KmIHKMMAC8EK9LEBaaCQNz6Kk5EF4uPH/view?usp=sharing&amp;ouid=110892441845319043427&amp;rtpof=true&amp;sd=true&#34;&gt;link&lt;/a&gt; to my template.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/sans/example_term_list.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Example Index Term List&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;p&gt;I put all my index materials into a Word document to format and turn into a PDF. I have this bound and printed at my local FedEx Kinkos. The cost comes out to be $15-30 depending on the number of pages. I usually go with spiral bound and have them put a nice clear cover on it.&lt;/p&gt;
+&lt;p&gt;One last note on sharing indexes. I choose not to share my indexes and instead share the method. My index is built around how my brain works and how I will remember things during the test. I don&amp;rsquo;t want to be blamed when someone fails a test because their brain works differently than mine. Also, I put screenshots of the textbooks in the back of my indexes so sharing that would be against SANS rules. My goal is to teach people to fish, not give them fish.&lt;/p&gt;
+&lt;h2 id=&#34;practice-exams&#34;&gt;Practice Exams&lt;/h2&gt;
+&lt;p&gt;Practice exams are one of the best resources to assess if you are ready for the real exam. I suggest you always take one before you take the real exam. For SANS.edu students, you usually get two practice exams with each course. I have never needed more than one per exam and I largely attribute that to my upfront legwork with the course material and index creation. Every so often I see something online where people say they take one practice exam before the course to see where they are and take the second one after the course. I cannot stress this enough, that is one of the worst uses of a practice test I have ever heard of. Please don&amp;rsquo;t do this. Just make your index, get it ready, and then use that to take the practice test. When you see questions you will be in one of a few situations, here is what you should do for each:&lt;/p&gt;
+&lt;p&gt;You know the right answer with 100% certainty - Submit the answer.
+You think you know the right answer with 50% certainty - Take a minute, consult your index, and see if you can increase your certainty. If it takes too long, skip it and come back to it at the end.
+You have no idea and it&amp;rsquo;ll be time-consuming to find the answer - Skip and come back to it at the end. Sometimes you&amp;rsquo;ll stumble across the information when researching other questions.&lt;/p&gt;
+&lt;p&gt;You have quite a bit of time for the exam and if you don&amp;rsquo;t spend a lot of time on questions in scenario 1, you can dedicate more time to labs and scenario 2 and 3 questions. Quick back-of-the-hand math is 240 minutes for 100 questions. That&amp;rsquo;s 2 minutes and 24 seconds per question. If you knock out a bunch of easy questions and quick wins, you can even bump the time up to 4-5 minutes each for the hard questions.&lt;/p&gt;
+&lt;p&gt;Treat your practice exam like your real exam. Only use your books and index. This way you will know if you are truly ready to test. All the information needed to get 100% is in the books. If you miss questions, read the explanations and review your index. Try and figure out if you just weren&amp;rsquo;t familiar with a term or if something was missing from your index.&lt;/p&gt;
+&lt;p&gt;The rule of thumb is that you are ready to test if you get over 80% on the practice exam. Because of this rule of thumb, I&amp;rsquo;ve never taken a second practice exam. I usually give mine away on the GIAC mailing lists or Slack to someone also taking the course.&lt;/p&gt;
+&lt;h2 id=&#34;passing-the-exam&#34;&gt;Passing the Exam&lt;/h2&gt;
+&lt;p&gt;The night before exam day comes, I prepare my office. For me, this includes unplugging my TV and Alexa, clearing off my desk, removing extra monitors, and laying out my two forms of ID. I prefer online testing due to the convenience factor but not everyone does. I have only had one issue come up and it was acceptably resolved within 30 minutes (didn&amp;rsquo;t lose any exam time). If you took your practice exam like a real exam, this should be just the same. You are given one break if needed. I don&amp;rsquo;t take it but I usually wrap exams up in around two hours. If I went longer than that, I would probably be using the breaks. After finishing the exam you are immediately notified of your score and shown how you did in each section. After you pass, the last thing to do it go to &lt;a href=&#34;http://credly.com/&#34;&gt;credly.com&lt;/a&gt; and add the badge to your LinkedIn profile and resume.&lt;/p&gt;
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/sans/resume.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;Resume with GIAC Certifications&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+
+  &lt;figure class=&#34;left&#34; &gt;
+    &lt;img src=&#34;//localhost:1313/images/sans/linkedin.png&#34;   style=&#34;border-radius: 8px;&#34;  /&gt;
+    
+      &lt;figcaption class=&#34;Center&#34;  style=&#34;color: white;&#34; &gt;LinkedIn Profile with Badges&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In conclusion, I think that SANS courses are some of the best available training for cyber security. They are pricey but worth it in my opinion. I am fortunate to have an employer who promotes training and continual education and hope others do too. While this was a glimpse at my process, it is by no means a requirement or best practice. It is just what works for me. Hopefully, this can be of value to others and inspire you to figure out your way or adapt this way to work for you.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>//localhost:1313/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/about/</guid>
+      <description>&lt;p&gt;My name is Connor Blackard. I am a Security Consultant and also a Master&amp;rsquo;s student in the SANS MSISE program. This blog is a place where I write about my thoughts, experiments, and cool findings I found about cyber security.&lt;/p&gt;</description>
+      <content>&lt;p&gt;My name is Connor Blackard. I am a Security Consultant and also a Master&amp;rsquo;s student in the SANS MSISE program. This blog is a place where I write about my thoughts, experiments, and cool findings I found about cyber security.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1 @@
+My name is Connor Blackard. I am a Security Consultant and also a Master's student in the SANS MSISE program. This blog is a place where I write about my thoughts, experiments, and cool findings I found about cyber security.

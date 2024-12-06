@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>Is My Homelab Compromised? :: Connor Blackard&#39;s Blog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="I recently conducted an experiment exploring endpoint and network analysis on one of my homelab devices. I got to use ClamAV, Zeek, Suricata, and Security Onion to try and prove a device isn’t compromised." />
+<meta name="keywords" content="homelab, securityonion, cybersecurity, network security, zeek, suricata" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="//localhost:1313/posts/homelab_network/" />
+
+
+
+
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/buttons.min.2bc533403a27dfe0e93105a92502b42ce4587e2e4a87d9f7d349e51e16e09478.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/code.min.00125962708925857e7b66dbc58391d55be1191a3d0ce2034de8c9cd2c481c36.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/fonts.min.4881f0c525f3ce2a1864fb6e96676396cebe1e6fcef1933e8e1dde7041004fb5.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/footer.min.2e3eb191baee58dd05a9f0104ac1fab0827bca7c64dafe0b2579f934c33a1d69.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/gist.min.a751e8b0abe1ba8bc53ced52a38b19d8950fe78ca29454ea8c2595cf26aad5c0.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/header.min.b6fb4423cf82a9f9d7abc9cd010223fa3d70a6526a3f28f8e17d814c06e18f9e.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.min.fe8dc560fccb53a458b0db19ccb7b265764ac46b68596b7e099c6793054dd457.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/menu.min.83637a90d903026bc280d3f82f96ceb06c5fc72b7c1a8d686afb5bbf818a29f7.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/pagination.min.82f6400eae7c7c6dc3c866733c2ec0579e4089608fea69400ff85b3880aa0d3c.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/post.min.fc74ca360273c1d828da3c02b8174eba435607b369d98418ccc6f2243cd4e75d.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/prism.min.9023bbc24533d09e97a51a0a42a5a7bfe4c591ae167c5551fb1d2191d11977c0.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/syntax.min.cc789ed9377260d7949ea4c18781fc58959a89287210fe4edbff44ebfc1511b6.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/terminal.min.929924583a103bbdf2f963efbd2691a3bb35708341184cc05b164cf1fdbb28da.css">
+
+  
+  <link rel="stylesheet" href="//localhost:1313/css/terms.min.b81791663c3790e738e571cdbf802312390d30e4b1d8dc9d814a5b5454d0ac11.css">
+
+
+
+
+
+
+
+<link rel="shortcut icon" href="//localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="Connor Blackard" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Is My Homelab Compromised?">
+<meta property="og:description" content="I recently conducted an experiment exploring endpoint and network analysis on one of my homelab devices. I got to use ClamAV, Zeek, Suricata, and Security Onion to try and prove a device isn’t compromised." />
+<meta property="og:url" content="//localhost:1313/posts/homelab_network/" />
+<meta property="og:site_name" content="Connor Blackard&#39;s Blog" />
+
+  
+  
+  <meta property="og:image" content="//localhost:1313/images/homelab/cover_page.png">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2024-04-11 10:22:35 -0600 -0600" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+<div class="container">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Connor Blackard&#39;s Blog
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="//localhost:1313/posts/homelab_network/">Is My Homelab Compromised?</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2024-04-11</time><span class="post-author">Connor Blackard</span></div>
+
+  
+  
+  <img src="//localhost:1313/images/homelab/cover_page.png"
+    class="post-cover"
+    alt="Is My Homelab Compromised?"
+    title="Cover Image" />
+
+
+  
+
+  <div class="post-content"><div>
+        <h2 id="introduction">Introduction<a href="#introduction" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>A few months ago in a conversation with someone about homelabs, I mentioned that I have a small homelab that includes a Lenovo Mini PC that runs Proxmox. By most accounts, this is a very modest homelab that allows me to spin up test machines as needed for whatever I am studying at the time and a Pi-Hole DNS AdBlocker. I guess the individual felt compelled to tell me that Lenovo had been known for backdoors and rootkits and I should save myself now and get rid of the entire system. Luckily as the CIO and CISO of my home network, I was able to dismiss them and say I consider the vendor and device to be a low risk to me, in my environment, with my usage. However, the thought crossed my head, what if this was a business leader who read a headline and came to inquire about potential risk? If that was the case, I may have to produce a more detailed answer than &ldquo;It&rsquo;s fine&rdquo; or &ldquo;Trust me bro&rdquo;. With some extra time, I decided I wanted to investigate this and see what I could come up with.</p>
+<h2 id="threats">Threats<a href="#threats" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>The first thing I did was consider possible attack vectors. I identified there are two main categories of threats that could happen, physical or digital. The main physical threats to the device are theft and environmental threats (tornados, busted pipes, inquisitive children). The controls for the threat of theft are locking doors, 24x7 security cameras, and two vicious attack dogs.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/attackdogs.jpg"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Vicious Attack Dogs</figcaption>
+    
+  </figure>
+
+
+<p>For the environmental risks, the natural disaster risks have been transferred to the insurance company and the children risk will have to be accepted.</p>
+<p>With the physical threats out of the way, we can move to the digital threats. In my mind, any digital threat would have to have some visibility on either the endpoint or the network. Malware would either be communicating to a C2 server or a backdoor would be present that would allow an attacker to trigger hidden functionality from the outside (similar the the recent XZ Utils backdoor). I am not as concerned about an attacker triggering a backdoor because the device is not internet-facing. In that scenario, an attacker would have to already have internal network access to even make use of such a backdoor. My testing plan was to scan the endpoint with antivirus and monitor network traffic for a few days and review.</p>
+<h2 id="testing">Testing<a href="#testing" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>To start with the endpoint, I used ClamAV to scan the system. This is a free and open-source antivirus scanner that supports Windows, Linux, and macOS. Since Proxmox is Debian under the hood, I was easily able to install and run the tool.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/install_clam.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Installing ClamAV</figcaption>
+    
+  </figure>
+
+
+<p>From here I ran the tool against every file on the disk. This was a lengthy scan but it ran in the background and I came back to it about 30 minutes later.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/running_clam.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Running ClamAV</figcaption>
+    
+  </figure>
+
+
+
+  <figure class="left" >
+    <img src="/images/homelab/clam_summary.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >ClamAV Scan Summary</figcaption>
+    
+  </figure>
+
+
+<p>As expected, the scan came back with no findings.</p>
+<p>From here I moved into the network analysis which I figured would be the more intensive process. I have a Ubiquiti Router at home and lucky for me, it has a large solid-state drive and comes installed with tcpdump. I decided to run tcpdump for 48 hours to collect network traffic to and from Proxmox. I will note here that I only collected traffic to and from the hypervisor itself, I did not collect all traffic on the port that would include the VMs. This was a decision to keep the packet capture size reasonable in addition to only testing if the Lenovo device was beaconing out, not the random VMs.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/tcpdump_command.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >tcpdump Command</figcaption>
+    
+  </figure>
+
+
+<p>Two days later I came back to a 232 MB packet capture of 11,796 packets. From here I had two routes I could go down to analyze this capture. The first would be the use of Wireshark to view the capture and rely on display filters and the statistics menu options (such as Protocol Hierarchy and Conversations) to quickly highlight items of interest. The second would be to use a tool such as Zeek to process the data into nicely formatted logs. While I did look at the capture as described in Wireshark, I created a Security Onion VM (on Proxmox) to process the PCAP. The added benefit of this is that it also ran Suricata on it. This is more in line with how an enterprise would handle a large amount of data with a Network Security Monitoring (NSM) platform.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/pcap_upload.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Security Onion PCAP Upload</figcaption>
+    
+  </figure>
+
+
+<p>I decided to manually review the logs instead of using the Security Onion Console and Kibana. I did this because I knew I could confidently analyze this using the command line. If I had to search or do any additional research, I could pivot into Kibana for additional capabilities. A first look at the Zeek logs revealed quite a few items.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/zeek_logs.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >Zeek Logs</figcaption>
+    
+  </figure>
+
+
+<p>I went through all of these but the ones that I&rsquo;ll cover here are conn.log, dns.log, http.log, files.log, and ssl.log. While the others are valuable logs, they didn&rsquo;t have anything super interesting in this case.</p>
+<p>Also worth noting is that I had to use jq instead of zeek-cut in the below commands. This was because Security Onion outputs zeek in JSON format instead of TSV format. I found this annoying as I prefer zeek-cut but between Google and a <a href="https://gist.github.com/olih/f7437fb6962fb3ee9fe95bda8d2c8fa4">cheatsheet</a>, I survived.</p>
+<p>The first log I looked at was the dns.log. This found all the DNS requests made from Proxmox. I did expect to see some activity here primarily because I ran some updates during the middle of the packet capture (to make sure it wasn&rsquo;t going to be too boring).</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/dns_logs.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >dns.log Output</figcaption>
+    
+  </figure>
+
+
+<p>It looks like all of the DNS queries were related to updates of some sort. Most of the updates are related to Debian and Proxmox. I did have to research what turnkeylinux.org was but then I remembered that Proxmox offered LXC containers, some of which are from turnkey. I had used this feature in the past so I am guessing it was an update to either the container lists or a container that is on the system, either way not a threat. The last item I had to research was the osuosl.org domain. Seeing this, I thought an ftp URL was weird but it turned out to be a university hosting an open-source mirror.</p>
+<p>Next, I looked into files.log. This would let me see what Zeek detected as being downloaded. Based on the URLs above, I expected a lot to be related to updates.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/files_logs.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >files.log Output</figcaption>
+    
+  </figure>
+
+
+<p>As I expected, a majority of the files were update package related. The rest of the file types were also not found to be threats.</p>
+<p>Next, I reviewed the http.log file to see what URLs were being hit. I have a good idea of the domains but since package managers often use port 80, I would be able to see additional details including the full URLs being requested.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/http_logs.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >http.log Output</figcaption>
+    
+  </figure>
+
+
+<p>This paints a good picture of the network traffic and appears to line up with the above findings.</p>
+<p>Next, I reviewed the conn.log file. Here I was looking for what ports and services were being used.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/conn_log.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >conn.log Services Output</figcaption>
+    
+  </figure>
+
+
+
+  <figure class="left" >
+    <img src="/images/homelab/conn_log_port.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >conn.log Ports Output</figcaption>
+    
+  </figure>
+
+
+<p>I found it unusual that there were entries for ports 12 and 1168 in the logs. These entries corresponded with the &rsquo;null&rsquo; service entries. I went to both Wireshark and tcpdump to try and find those packets but could not. Ultimately, I trust tcpdump as the official source of truth and if that could not find the packets, I am not convinced they exist. I chalked this up to a Zeek error but will probably try and investigate further by rerunning Zeek, this time in a docker container (with my preferred TSV format). For right now I don&rsquo;t consider this to be a threat. Other interesting things in the ports list were NTP(123/UDP) and the Proxmox WebUI (8006/TCP). I did note that there were 71 SSL packets but only 69 Proxmox WebUI packets. This meant that two packets used SSL that went outbound. These corresponded to turnkey Linux based on the SNI name.</p>
+
+  <figure class="left" >
+    <img src="/images/homelab/ssl_log.png"   style="border-radius: 8px;"  />
+    
+      <figcaption class="Center"  style="color: white;" >ssl.log Output</figcaption>
+    
+  </figure>
+
+
+<p>The last thing I did was examine the Suricata file to see if any alerts were triggered. The file was empty indicating no signatures matched. Following this, I felt I had a good understanding of the network traffic sent to and from the system over the testing period.</p>
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p>Ultimately, I feel like now I have a tested process and documentable data to say that this device does not appear to be compromised. This backs up my initial stance of it being a low risk while also having more substance than &lsquo;Trust me bro&rsquo;. I am sure that there are additional tests I could have run and ways that stuff could still but undetected but this is good enough for me and I feel good enough to present as a response that due diligence has been done. Overall it was a fun experiment that took a couple of hours and let me dive into some technologies in ways I don&rsquo;t normally get to. I&rsquo;d love to hear from others if you had something you would have done differently or how you would have approached the problem.</p>
+
+      </div></div>
+
+  
+    
+<div class="pagination">
+  <div class="pagination__title">
+    <span class="pagination__title-h">Read other posts</span>
+    <hr />
+  </div>
+  <div class="pagination__buttons">
+    
+    
+    
+      <a href="//localhost:1313/posts/giac_exam/" class="button inline next">
+        How to Pass a SANS Course in 90 days.
+      </a>
+    
+  </div>
+</div>
+
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2024 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>
